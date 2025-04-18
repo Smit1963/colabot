@@ -1,25 +1,16 @@
 {
-	"compilerOptions": {
-		"module": "commonjs",
-		"target": "ES2020",
-		"outDir": "out",
-		"lib": [
-			"DOM",
-			"es2021"
-		],
-		"sourceMap": true,
-		"rootDir": "src",
-		"strict": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
-		/* Additional Checks */
-		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
-		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
-		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
-	},
-	"exclude": [
-		"node_modules",
-		"webview-ui"
-	]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "./out",
+    "lib": ["DOM", "es2021"],
+    "sourceMap": true,
+    "rootDir": "./src", // Keep rootDir as ./src
+    "strict": true,
+    "typeRoots": ["node_modules/@types", "./node_modules/@types/vscode"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": ["node_modules", ".vscode", "out", "webview-ui"] // Exclude webview-ui
 }

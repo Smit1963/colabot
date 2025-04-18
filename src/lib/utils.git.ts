@@ -1,98 +1,109 @@
-import { window } from 'vscode'
-import { getStagedDiff, gitCommit } from './utils.cli'
-import { COMMIT_TYPES } from '../lib/constants'
+import { window } from "vscode";
+import { getStagedDiff, gitCommit } from "./utils.cli";
+import { COMMIT_TYPES } from "../lib/constants";
 
-export function commitTypesOpts (withGitmoji: boolean, withSemVer: boolean) {
+export function commitTypesOpts(withGitmoji: boolean, withSemVer: boolean) {
   if (withSemVer) {
     return Object.entries(COMMIT_TYPES).map(([key, val]) =>
-      withGitmoji ? `${val.emoji} ${key}: ${val.description}` : `${key}: ${val.description}`
-    )
+      withGitmoji
+        ? `${val.emoji} ${key}: ${val.description}`
+        : `${key}: ${val.description}`
+    );
   }
 
   return [
     withGitmoji
       ? `🤖 ai: ${COMMIT_TYPES.ai.description}`
-      : `ai: ${COMMIT_TYPES.ai.description}`
-  ]
+      : `ai: ${COMMIT_TYPES.ai.description}`,
+  ];
 }
 
-export function getCommitTypeObject ({
+export function getCommitTypeObject({
   type,
   isAI,
   withGitmoji,
-  commit
+  commit,
 }: {
-  type: string
-  isAI: boolean
-  withGitmoji: boolean
-  commit: string
+  type: string;
+  isAI: boolean;
+  withGitmoji: boolean;
+  commit: string;
 }) {
-  const { emoji, release } = COMMIT_TYPES[type as keyof typeof COMMIT_TYPES]
+  const { emoji, release } = COMMIT_TYPES[type as keyof typeof COMMIT_TYPES];
 
   if (isAI) {
     return {
       release,
-      commit: `${withGitmoji ? emoji : ''} ${commit.trim()}`
-    }
+      commit: `${withGitmoji ? emoji : ""} ${commit.trim()}`,
+    };
   }
 
   return {
     release,
-    commit: `${withGitmoji ? emoji : ''} ${type}: ${commit}`
-  }
+    commit: `${withGitmoji ? emoji : ""} ${type}: ${commit}`,
+  };
 }
 
-const stagedError = 'No staged changes found. Please stage your changes before committing.'
+const stagedError =
+  "No staged changes found. Please stage your changes before committing.";
 
-export async function releaseCommit (commit: string, release: boolean) {
+export async function releaseCommit(commit: string, release: boolean) {
   if (release) {
     const isBreakingChange = await window.showInformationMessage(
-      'Are there any breaking changes?',
-      'No',
-      'Yes'
-    )
+      "Are there any breaking changes?",
+      "No",
+      "Yes"
+    );
 
-    if (isBreakingChange === 'No') {
+    if (isBreakingChange === "No") {
       try {
-        await gitCommit(commit)
-        return await window.showInformationMessage(`Commit created ✔: ${commit}`, { detail: '' })
+        await gitCommit(commit);
+        return await window.showInformationMessage(
+          `Commit created ✔: ${commit}`,
+          { detail: "" }
+        );
       } catch (err) {
-        window.showErrorMessage(stagedError)
-        process.exit(0)
+        window.showErrorMessage(stagedError);
+        process.exit(0);
       }
     }
 
-    if (isBreakingChange === 'Yes') {
+    if (isBreakingChange === "Yes") {
       try {
-        await gitCommit(`${commit} [breaking change]`)
-        return await window.showInformationMessage(`Commit created ✔: ${commit} [breaking change]`)
+        await gitCommit(`${commit} [breaking change]`);
+        return await window.showInformationMessage(
+          `Commit created ✔: ${commit} [breaking change]`
+        );
       } catch (err) {
-        window.showErrorMessage(stagedError)
-        process.exit(0)
+        window.showErrorMessage(stagedError);
+        process.exit(0);
       }
     }
   }
 
   try {
-    await gitCommit(commit)
-    return await window.showInformationMessage(`Commit created ✔: ${commit}`)
+    await gitCommit(commit);
+    return await window.showInformationMessage(`Commit created ✔: ${commit}`);
   } catch (error) {
-    window.showErrorMessage(stagedError)
-    process.exit(0)
+    window.showErrorMessage(stagedError);
+    process.exit(0);
   }
 }
 
-const withSemVer = '(following the Semantic Versioning specification)'
-const promptTemplate = (withSV: boolean) => `Write an insightful but concise Git commit message ${withSV ? withSemVer : ''} in a complete sentence in present tense for the following diff without prefacing it with anything:`
+const withSemVer = "(following the Semantic Versioning specification)";
+const promptTemplate = (withSV: boolean) =>
+  `Write an insightful but concise Git commit message ${
+    withSV ? withSemVer : ""
+  } in a complete sentence in present tense for the following diff without prefacing it with anything:`;
 
-export async function generateCommitMessage (withSemVer: boolean) {
-  const staged = await getStagedDiff()
+export async function generateCommitMessage(withSemVer: boolean) {
+  const staged = await getStagedDiff();
 
   if (staged.files.length === 0) {
-    return await window.showWarningMessage(stagedError)
+    return await window.showWarningMessage(stagedError);
   }
 
-  const prompt = `${promptTemplate(withSemVer)}\n${staged.diff}`
+  const prompt = `${promptTemplate(withSemVer)}\n${staged.diff}`;
 
   /**
    * max tokens limits
@@ -102,19 +113,19 @@ export async function generateCommitMessage (withSemVer: boolean) {
 
   if (prompt.length > 4000) {
     return await window.showWarningMessage(
-      'The diff is too large for the OpenAI API. Try reducing the number of staged changes, or write your own commit message.'
-    )
+      "The diff is too large for the OpenAI API. Try reducing the number of staged changes, or write your own commit message."
+    );
   }
 
-  return prompt
+  return prompt;
 }
 
-export async function generateBodyMessage () {
-  const staged = await getStagedDiff()
+export async function generateBodyMessage() {
+  const staged = await getStagedDiff();
 
   if (staged.files.length === 0) {
-    return await window.showWarningMessage(stagedError)
+    return await window.showWarningMessage(stagedError);
   }
 
-  return `Write an insightful but concise Git commit body message for the following diff. answer using only that information, outputted in markdown format:\n${staged.diff}`
+  return `Write an insightful but concise Git commit body message for the following diff. answer using only that information, outputted in markdown format:\n${staged.diff}`;
 }
