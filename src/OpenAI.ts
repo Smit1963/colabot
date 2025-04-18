@@ -22,7 +22,7 @@ export async function OpenAIStream (selectedText: string, llmSettings: Settings)
       n: llmSettings.n
     })
 
-    return completion.choices[0].message.content!
+    return completion.choices[0].message.content ?? ''
   } catch (error) {
     const errorAsAny = error as any
     if (errorAsAny.code === 'ENOTFOUND') {

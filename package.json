@@ -1,8 +1,8 @@
 {
   "activationEvents": [],
   "author": {
-    "email": "fe.ossandon.u@gmail.com",
-    "name": "Felipe Ossandon"
+    "email": "smit23492@gmail.com",
+    "name": "Smit Patel"
   },
   "categories": [
     "Data Science",
@@ -16,82 +16,82 @@
   "contributes": {
     "commands": [
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.setApiKey",
+        "category": "Spilot",
+        "command": "spilot.setApiKey",
         "title": "Set API Key"
       },
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.removeApiKey",
+        "category": "Spilot",
+        "command": "spilot.removeApiKey",
         "title": "Remove API Key"
       },
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.docsCode",
-        "title": "Generate Docs ColaBOT"
+        "category": "Spilot",
+        "command": "spilot.docsCode",
+        "title": "Generate Docs Spilot"
       },
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.fixCode",
-        "title": "Fix This ColaBOT"
+        "category": "Spilot",
+        "command": "spilot.fixCode",
+        "title": "Fix This Spilot"
       },
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.testCode",
-        "title": "Generate Test ColaBOT"
+        "category": "Spilot",
+        "command": "spilot.testCode",
+        "title": "Generate Test Spilot"
       },
       {
-        "category": "ColaBOT",
-        "command": "colabot-vscode.explainCode",
-        "title": "Explain This ColaBOT"
+        "category": "Spilot",
+        "command": "spilot.explainCode",
+        "title": "Explain This Spilot"
       },
       {
-        "category": "ColaBOT (Git)",
-        "command": "colabot-vscode.aiCommit",
+        "category": "Spilot (Git)",
+        "command": "spilot.aiCommit",
         "title": "AI Commit"
       },
       {
-        "command": "colabot-vscode.clearChat",
+        "command": "spilot.clearChat",
         "icon": "$(clear-all)",
         "title": "Clear"
       },
       {
-        "command": "colabot-vscode.chatFeedback",
+        "command": "spilot.chatFeedback",
         "icon": "$(feedback)",
         "title": "Send Chat Feedback"
       },
       {
-        "command": "colabot-vscode.removeApiKeySidebar",
+        "command": "spilot.removeApiKeySidebar",
         "icon": "$(more)",
         "title": "Remove API Key"
       }
     ],
     "configuration": {
       "properties": {
-        "colaBot.apiKey": {
+        "spilot.apiKey": {
           "default": "openai",
-          "description": "To use ColaBOT, press (ctrl+shift+p) and search for 'ColaBOT: Set API Key' in the command palette to set your OpenAI API key.",
+          "description": "To use Spilot, press (ctrl+shift+p) and search for 'Spilot: Set API Key' in the command palette to set your OpenAI API key.",
           "enum": [
             "openai"
           ],
           "order": 1,
           "type": "string"
         },
-        "colaBot.gitMoji": {
+        "spilot.gitMoji": {
           "default": true,
           "description": "Use gitmoji in your SemVer commits",
           "order": 6,
           "type": "boolean"
         },
-        "colaBot.maxTokens": {
+        "spilot.maxTokens": {
           "default": 1500,
           "description": "The maximum number of tokens to generate",
           "order": 4,
           "type": "number"
         },
-        "colaBot.model": {
+        "spilot.model": {
           "default": "gpt-3.5-turbo",
-          "description": "The model to use for ColaBOT",
+          "description": "The model to use for Spilot",
           "enum": [
             "gpt-3.5-turbo",
             "gpt-3.5-turbo-16k",
@@ -102,71 +102,71 @@
           "order": 2,
           "type": "string"
         },
-        "colaBot.organizationId": {
+        "spilot.organizationId": {
           "markdownDescription": "OpenAI [Organization ID](https://platform.openai.com/docs/api-reference/requesting-organization) (For some OpenAI models, this field may need to be completed for their operation).",
           "order": 3,
           "type": "string"
         },
-        "colaBot.semanticVersioningSpecification": {
+        "spilot.semanticVersioningSpecification": {
           "default": true,
           "description": "Use semantic versioning specification in your commits",
           "order": 7,
           "type": "boolean"
         },
-        "colaBot.temperature": {
+        "spilot.temperature": {
           "default": 0.3,
           "description": "The temperature of the model (between 0 and 1)",
           "order": 5,
           "type": "number"
         }
       },
-      "title": "ColaBOT 🤖",
+      "title": "Spilot 🤖",
       "type": "object"
     },
     "keybindings": [],
     "menus": {
       "editor/context": [
         {
-          "command": "colabot-vscode.fixCode",
-          "group": "colabot_commands"
+          "command": "spilot.fixCode",
+          "group": "spilot_commands"
         },
         {
-          "command": "colabot-vscode.testCode",
-          "group": "colabot_commands"
+          "command": "spilot.testCode",
+          "group": "spilot_commands"
         },
         {
-          "command": "colabot-vscode.docsCode",
-          "group": "colabot_commands"
+          "command": "spilot.docsCode",
+          "group": "spilot_commands"
         },
         {
-          "command": "colabot-vscode.explainCode",
-          "group": "colabot_commands"
+          "command": "spilot.explainCode",
+          "group": "spilot_commands"
         }
       ],
       "view/title": [
         {
-          "command": "colabot-vscode.chatFeedback",
+          "command": "spilot.chatFeedback",
           "group": "navigation@2",
-          "when": "view == colabot-sidebar"
+          "when": "view == spilot-sidebar"
         },
         {
-          "command": "colabot-vscode.clearChat",
+          "command": "spilot.clearChat",
           "group": "navigation@1",
-          "when": "view == colabot-sidebar"
+          "when": "view == spilot-sidebar"
         },
         {
-          "command": "colabot-vscode.removeApiKeySidebar",
+          "command": "spilot.removeApiKeySidebar",
           "group": "more@3",
-          "when": "view == colabot-sidebar"
+          "when": "view == spilot-sidebar"
         }
       ]
     },
     "views": {
-      "colabot-sidebar-chat": [
+      "spilot-sidebar-chat": [
         {
-          "contextualTitle": "ColaBOT",
+          "contextualTitle": "Spilot",
           "icon": "assets/icon-vector.png",
-          "id": "colabot-sidebar",
+          "id": "spilot-sidebar",
           "name": "",
           "type": "webview"
         }
@@ -176,8 +176,8 @@
       "activitybar": [
         {
           "icon": "assets/icon-vector.png",
-          "id": "colabot-sidebar-chat",
-          "title": "ColaBOT Chat"
+          "id": "spilot-sidebar-chat",
+          "title": "Spilot Chat"
         }
       ]
     }
@@ -192,7 +192,7 @@
     "@types/glob": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
-    "@types/vscode": "^1.75.0",
+    "@types/vscode": "^1.99.1",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vscode/test-electron": "^2.2.2",
@@ -205,16 +205,16 @@
     "mocha": "^10.1.0",
     "typescript": "^4.9.5"
   },
-  "displayName": "ColaBOT: AI assistant",
+  "displayName": "Spilot: AI assistant",
   "engines": {
     "vscode": "^1.75.0"
   },
   "icon": "assets/icon.png",
   "main": "./out/extension.js",
-  "name": "colabot-vscode",
-  "publisher": "ColaBOT",
+  "name": "spilot",
+  "publisher": "Spilot",
   "repository": {
-    "url": "https://github.com/felipetodev/colabot"
+    "url": "https://github.com/smit23492/spilot"
   },
   "scripts": {
     "build:webview": "cd webview-ui && pnpm run build",

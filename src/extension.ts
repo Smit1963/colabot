@@ -13,7 +13,7 @@ export async function activate (context: vscode.ExtensionContext) {
 
   const sidebarProvider = new SidebarProvider(context)
 
-  const config = vscode.workspace.getConfiguration('colaBot')
+  const config = vscode.workspace.getConfiguration('spilot')
 
   sidebarProvider.setSettings({
     apiKey: apiKey!,
@@ -36,27 +36,27 @@ export async function activate (context: vscode.ExtensionContext) {
   )
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('colabot-vscode.fixCode', () => {
+    vscode.commands.registerCommand('spilot.fixCode', () => {
       triggerCommand(sidebarProvider, 'fix')
     }),
-    vscode.commands.registerCommand('colabot-vscode.docsCode', () => {
+    vscode.commands.registerCommand('spilot.docsCode', () => {
       triggerCommand(sidebarProvider, 'doc')
     }),
-    vscode.commands.registerCommand('colabot-vscode.testCode', () => {
+    vscode.commands.registerCommand('spilot.testCode', () => {
       triggerCommand(sidebarProvider, 'test')
     }),
-    vscode.commands.registerCommand('colabot-vscode.explainCode', () => {
+    vscode.commands.registerCommand('spilot.explainCode', () => {
       triggerCommand(sidebarProvider, 'explain')
     }),
-    vscode.commands.registerCommand('colabot-vscode.clearChat', () => {
+    vscode.commands.registerCommand('spilot.clearChat', () => {
       sidebarProvider._view?.webview.postMessage({
         type: 'clearChat'
       })
     }),
-    vscode.commands.registerCommand('colabot-vscode.chatFeedback', () => {
-      vscode.env.openExternal(vscode.Uri.parse('https://github.com/felipetodev/colabot/issues'))
+    vscode.commands.registerCommand('spilot.chatFeedback', () => {
+      vscode.env.openExternal(vscode.Uri.parse('https://github.com/smit23492/spilot/issues'))
     }),
-    vscode.commands.registerCommand('colabot-vscode.removeApiKeySidebar', async () => {
+    vscode.commands.registerCommand('spilot.removeApiKeySidebar', async () => {
       if (!apiKey) return
       await settings.deleteKeyData()
       sidebarProvider.setSettings({ apiKey: '' })
@@ -65,7 +65,7 @@ export async function activate (context: vscode.ExtensionContext) {
     })
   )
 
-  vscode.commands.registerCommand('colabot-vscode.setApiKey', async () => {
+  vscode.commands.registerCommand('spilot.setApiKey', async () => {
     const tokenInput = await vscode.window.showInputBox({
       password: true
     })
@@ -75,28 +75,28 @@ export async function activate (context: vscode.ExtensionContext) {
     execReloadWindow('API key set ✔. Please reload to apply changes.')
   })
 
-  vscode.commands.registerCommand('colabot-vscode.removeApiKey', async () => {
+  vscode.commands.registerCommand('spilot.removeApiKey', async () => {
     await settings.deleteKeyData()
     execReloadWindow('API key removed. Please reload to apply changes.')
   })
 
   // AI commits command
-  vscode.commands.registerCommand('colabot-vscode.aiCommit', () => {
+  vscode.commands.registerCommand('spilot.aiCommit', () => {
     aiCommits({ settings: sidebarProvider.getSettings() })
   })
 
   vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
-    if (event.affectsConfiguration('colaBot.organizationId')) {
-      const config = vscode.workspace.getConfiguration('colaBot')
+    if (event.affectsConfiguration('spilot.organizationId')) {
+      const config = vscode.workspace.getConfiguration('spilot')
       sidebarProvider.setSettings({ organizationId: config.get('organizationId') })
-    } else if (event.affectsConfiguration('colaBot.model')) {
-      const config = vscode.workspace.getConfiguration('colaBot')
+    } else if (event.affectsConfiguration('spilot.model')) {
+      const config = vscode.workspace.getConfiguration('spilot')
       sidebarProvider.setSettings({ model: config.get('model') })
-    } else if (event.affectsConfiguration('colaBot.temperature')) {
-      const config = vscode.workspace.getConfiguration('colaBot')
+    } else if (event.affectsConfiguration('spilot.temperature')) {
+      const config = vscode.workspace.getConfiguration('spilot')
       sidebarProvider.setSettings({ temperature: config.get('temperature') })
-    } else if (event.affectsConfiguration('colaBot.maxTokens')) {
-      const config = vscode.workspace.getConfiguration('colaBot')
+    } else if (event.affectsConfiguration('spilot.maxTokens')) {
+      const config = vscode.workspace.getConfiguration('spilot')
       sidebarProvider.setSettings({ max_tokens: config.get('maxTokens') })
     }
 

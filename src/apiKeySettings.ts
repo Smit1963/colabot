@@ -18,17 +18,17 @@ export default class ApiKeySettings {
   async storeKeyData (token?: string): Promise<void> {
     // Update values in secret storage.
     if (token) {
-      this.secretStorage.store('colabot_key', token)
+      this.secretStorage.store('spilot_key', token)
     }
   }
 
   async getKeyData (): Promise<string | undefined> {
     // Retrieve data from secret storage.
-    return await this.secretStorage.get('colabot_key')
+    return await this.secretStorage.get('spilot_key')
   }
 
   async deleteKeyData (): Promise<void> {
     // Delete data from secret storage.
-    await this.secretStorage.delete('colabot_key')
+    await this.secretStorage.delete('spilot_key')
   }
 }

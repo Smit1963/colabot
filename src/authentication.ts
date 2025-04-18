@@ -2,7 +2,7 @@ import { authentication, window, type ExtensionContext } from 'vscode'
 import * as Octokit from '@octokit/rest'
 import { Util } from './Util'
 
-const accessTokenKey = 'token-test'
+const accessTokenKey = 'spilot-access-token'
 const GITHUB_AUTH_PROVIDER_ID = 'github'
 const SCOPES = ['user:email']
 
@@ -14,7 +14,7 @@ export class Credentials {
     this.setOctokit()
   }
 
-  private async setOctokit () {
+  private async setOctokit (): Promise<void> {
     const session = await authentication.getSession(GITHUB_AUTH_PROVIDER_ID, SCOPES, { createIfNone: false })
     if (session) {
       Util.globalState.update(accessTokenKey, session.accessToken)
